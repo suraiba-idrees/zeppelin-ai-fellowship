@@ -49,7 +49,7 @@ This repository follows the Git workflow defined by the Zeppelin AI & Generative
 | **Suraiba Idrees** *(Team Lead)* | `feature/frontend-foundation` |
 | Maryam Imran Shah | `feature/ai-engine` |
 | Aniqa Qamar | `feature/pdf-utility` |
-| Saboor Khalil | `feature/backend-setup` |
+| Saboora Khalil | `feature/backend-setup` |
 
 ---
 
@@ -174,7 +174,7 @@ Additional issues and milestones will be introduced as the project progresses.
 | **Team Lead** | Suraiba Idrees |
 | **Member** | Maryam Imran Shah |
 | **Member** | Aniqa Qamar |
-| **Member** | Saboor Khalil |
+| **Member** | Saboora Khalil |
 
 ---
 
