@@ -55,14 +55,3 @@ def extract_text_from_pdf(pdf_file_path):
 
     except Exception as e:
         raise RuntimeError(f"Error while reading the PDF: {e}")
-
-
-#if __name__ == "__main__":
-    #pdf_path = "Aniqa CV(v2).pdf"
-
-    #try:
-        #text = extract_text_from_pdf(pdf_path)
-        #print(text)
-
-    #except Exception as error:
-        #print(error)
