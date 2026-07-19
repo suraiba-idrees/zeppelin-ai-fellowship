@@ -1,11 +1,19 @@
-"use client";
+'use client';
 
 import { FormEvent, useState } from "react";
+
+// Standard Structural Blueprint interface mapping for our dynamic JSON object
+interface AnalysisResponse {
+  match_score: number;
+  missing_keywords: string[];
+  suggestions: string[];
+}
 
 export default function Home() {
   const [resumeFile, setResumeFile] = useState<File | null>(null);
   const [jobDescription, setJobDescription] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [analysisResult, setAnalysisResult] = useState<AnalysisResponse | null>(null);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -16,31 +24,47 @@ export default function Home() {
     }
 
     setIsLoading(true);
+    setAnalysisResult(null); // Reset previous results on new submission
 
-    // Backend/API integration will be added in Chunk 2.
-    console.log("Resume:", resumeFile);
-    console.log("Job Description:", jobDescription);
-
+    // Simulating Backend Response Delay with 100% accurate Mock JSON Match Format
     setTimeout(() => {
+      const mockJSONResponse: AnalysisResponse = {
+        match_score: 84,
+        missing_keywords: ["Next.js App Router", "Tailwind CSS Layouts", "Asynchronous Fetch API"],
+        suggestions: [
+          "Integrate explicit state handling parameters directly inside your configuration headers.",
+          "Expand operational descriptions for web architecture modules by utilizing active framework verbs.",
+          "Structure standard TypeScript schemas to block runtime type execution errors seamlessly."
+        ]
+      };
+
+      setAnalysisResult(mockJSONResponse);
       setIsLoading(false);
-    }, 1000);
+    }, 2000); // 2 Seconds premium micro loading trigger interval
+  }
+
+  // ⚡ NEW ACTION TRIGGER TO FRESH START THE WORKSPACE FLOW
+  function handleReset() {
+    setResumeFile(null);
+    setJobDescription("");
+    setAnalysisResult(null);
+    setIsLoading(false);
+    
+    // Explicitly reset the native file input DOM node if needed
+    const fileInput = document.getElementById("resumeFile") as HTMLInputElement;
+    if (fileInput) fileInput.value = "";
   }
 
   return (
     <div className="app-viewport-wrapper">
       <header className="app-global-navbar">
         <div className="navbar-container">
-          <div className="brand-identity-block">
-            <span className="brand-text-label">
-              Zeppelin <span className="logo-accent-node">Labs</span>
-            </span>
-          </div>
-
+          <span className="brand-text-label">
+            Zeppelin <span className="logo-accent-node">Labs</span>
+          </span>
           <div className="navbar-utility-status">
             <span className="pulse-indicator-node"></span>
-            <span className="status-framework-tag">
-             {/* Resume Feedback Engine v2.0 */}
-            </span>
+            <span className="status-framework-tag">// Resume Feedback Engine v2.0</span>
           </div>
         </div>
       </header>
@@ -48,22 +72,9 @@ export default function Home() {
       <div className="viewport-workspace-flow">
         <div className="workspace-bounded-container">
           <div className="app-marketing-heading">
-            <div className="badge-status-pill">
-              Powered by Gemini & Claude
-            </div>
-
-            <h1>
-              Optimize Your Resume For{" "}
-              <span className="chrome-indigo-gradient">
-                ATS Alignment
-              </span>
-            </h1>
-
-            <p>
-              Scan your profile against target market framework metrics,
-              extract missing keyword parameters, and build clear alignment
-              scores instantly.
-            </p>
+            <div className="badge-status-pill">Powered by Gemini & Claude</div>
+            <h1>Optimize Your Resume For <span className="chrome-indigo-gradient">ATS Alignment</span></h1>
+            <p>Scan your profile against target market framework metrics, extract missing keyword parameters, and build clear alignment scores instantly.</p>
           </div>
 
           <main className="product-interactive-canvas">
@@ -71,12 +82,10 @@ export default function Home() {
               <div className="canvas-workflow-section">
                 <div className="workflow-header-label">
                   <span className="workflow-step-badge">01</span>
-                  <label htmlFor="resumeFile">
-                    Ingest Candidate Profile
-                  </label>
+                  <label htmlFor="resumeFile">Ingest Candidate Profile</label>
                 </div>
 
-                <div className="mega-dropzone-interactive-container">
+                <div className="mega-dropzone-interactive-container" style={{ position: 'relative' }}>
                   <input
                     type="file"
                     id="resumeFile"
@@ -85,42 +94,30 @@ export default function Home() {
                       const file = event.target.files?.[0] || null;
                       setResumeFile(file);
                     }}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      height: '100%',
+                      opacity: 0,
+                      cursor: 'pointer',
+                      zIndex: 10
+                    }}
                     required
                   />
-
-                  <div className="dropzone-graphic-render-view">
+                  <div className="dropzone-graphic-render-view" style={{ position: 'relative', zIndex: 1 }}>
                     <div className="vector-icon-circle-shell">
-                      <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
                         <polyline points="14 2 14 8 20 8" />
                         <line x1="12" y1="18" x2="12" y2="12" />
                         <polyline points="9 15 12 12 15 15" />
                       </svg>
                     </div>
-
-                    <h3>
-                      {resumeFile
-                        ? resumeFile.name
-                        : "Drag & drop your resume file here"}
-                    </h3>
-
-                    <p>
-                      or{" "}
-                      <span className="browse-action-link">
-                        browse from local disk
-                      </span>
-                    </p>
-
-                    <span className="file-specification-metadata">
-                      Supports PDF and DOCX documents up to 10MB
-                    </span>
+                    <h3>{resumeFile ? resumeFile.name : "Drag & drop your resume file here"}</h3>
+                    <p>or <span className="browse-action-link">browse from local disk</span></p>
+                    <span className="file-specification-metadata">Supports PDF and DOCX documents up to 10MB</span>
                   </div>
                 </div>
               </div>
@@ -128,59 +125,99 @@ export default function Home() {
               <div className="canvas-workflow-section">
                 <div className="workflow-header-label">
                   <span className="workflow-step-badge">02</span>
-                  <label htmlFor="jobDescription">
-                    Target Framework / Job Description
-                  </label>
+                  <label htmlFor="jobDescription">Target Framework / Job Description</label>
                 </div>
-
                 <div className="textarea-input-wrapper-shell">
                   <textarea
                     id="jobDescription"
                     value={jobDescription}
-                    onChange={(event) =>
-                      setJobDescription(event.target.value)
-                    }
+                    onChange={(event) => setJobDescription(event.target.value)}
                     placeholder="Paste the complete job description, operational guidelines, or technical key rules from the target company layout here..."
                     required
                   />
                 </div>
               </div>
 
-              <div className="canvas-action-footer-panel">
-                <button
-                  type="submit"
-                  id="submitBtn"
-                  className="premium-action-trigger-btn"
+              {/* ⚡ UPDATED BOTH BUTTONS WITH GAP MAPPING FOR BALANCED LAYOUT */}
+              <div className="canvas-action-footer-panel" style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
+                <button 
+                  type="button" 
+                  onClick={handleReset} 
                   disabled={isLoading}
-                >
-                  <span>
-                    {isLoading
-                      ? "Processing Core Parameters..."
-                      : "Scan & Generate AI Matrix Analysis"}
-                  </span>
-
-                  {!isLoading && (
-                    <svg
-                      className="chevron-arrow-icon"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
+                  style={{
+                    background: '#e2e8f0',     /* Active gray background */
+                    color: '#0f172a',          /* Bold dark text color */
+                    border: 'none',
+                    padding: '0.85rem 1.75rem',
+                    borderRadius: '9999px',
+                    fontWeight: 600,
+                    cursor: 'pointer'          /* Standard clickable pointer */
+                      }}
                     >
-                      <line x1="5" y1="12" x2="19" y2="12" />
-                      <polyline points="12 5 19 12 12 19" />
-                    </svg>
+                Clear Form
+                </button>
+
+                
+                <button type="submit" id="submitBtn" className="premium-action-trigger-btn" disabled={isLoading}>
+                  {isLoading ? (
+                    <div className="interactive-loader-group">
+                      <div className="chic-spinner-ring"></div>
+                      <span>Processing Matrix Analytics...</span>
+                    </div>
+                  ) : (
+                    <>
+                      <span>Scan & Generate AI Matrix Analysis</span>
+                      <svg className="chevron-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                        <polyline points="12 5 19 12 12 19" />
+                      </svg>
+                    </>
                   )}
                 </button>
               </div>
             </form>
           </main>
 
-          <section id="resultPanel" className="hidden">
-            <div id="analysisContent"></div>
-          </section>
+          {/* DYNAMIC METRICS OUTPUT PANEL - RENDERS ON SUCCESS WITH REAL SAAS CARDS */}
+          {analysisResult && (
+            <section id="resultPanel" className="results-display-sheet">
+              
+              <div className="summary-score-hero-card">
+                <div className="score-ring-view">
+                  <span className="score-metric-number">{analysisResult.match_score}</span>
+                  <span className="score-metric-denominator">/100</span>
+                </div>
+                <div className="hero-text-block">
+                  <h2>Framework Alignment Score</h2>
+                  <p>Overall matching weight index generated via predictive AI core mapping parameters.</p>
+                </div>
+              </div>
+
+              <div className="metrics-detail-grid">
+                
+                <div className="metric-card-block keyword-card">
+                  <h3>Missing Keywords Space</h3>
+                  <div className="tags-flex-container">
+                    {analysisResult.missing_keywords.map((tag, idx) => (
+                      <span key={idx} className="keyword-danger-tag">⚠️ {tag}</span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="metric-card-block optimization-card">
+                  <h3>Strategic Rewrite Suggestions</h3>
+                  <ol className="suggestions-ordered-list">
+                    {analysisResult.suggestions.map((item, idx) => (
+                      <li key={idx}>{item}</li>
+                    ))}
+                  </ol>
+                </div>
+
+              </div>
+
+            </section>
+          )}
+
         </div>
       </div>
     </div>
