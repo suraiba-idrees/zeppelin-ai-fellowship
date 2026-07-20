@@ -77,7 +77,7 @@ export default function Home() {
       <div className="viewport-workspace-flow">
         <div className="workspace-bounded-container">
           <div className="app-marketing-heading">
-            <div className="badge-status-pill">Powered by Gemini</div>
+            <div className="badge-status-pill">Powered by Gemini v3.5-flash</div>
             <h1>Optimize Your Resume For <span className="chrome-indigo-gradient">ATS Alignment</span></h1>
             <p>Scan your profile against target market framework metrics, extract missing keyword parameters, and build clear alignment scores instantly.</p>
           </div>
