@@ -1,0 +1,391 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   ZEPPELIN LABS ENGINE CORE STRUCTURAL DESIGN - MODERATE WHITE UTILITIES
+   ========================================================================== */
+:root {
+    --surface-solid: #ffffff;
+    --border-hairline: #e2e8f0;
+    --radius-canvas: 12px;
+    --shadow-premium: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    --indigo-subtle-tint: #f0f2fe;
+    --indigo-primary: #4f46e5;
+    --text-silver-gray: #64748b;
+    --text-slate-onyx: #0f172a;
+}
+
+body {
+    background-color: #f8fafc;
+    color: var(--text-slate-onyx);
+    font-family: system-ui, -apple-system, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Base Wrapper Blueprint Layout */
+.app-viewport-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Navigation Top Navbar Layout */
+.app-global-navbar {
+    border-bottom: 1px solid var(--border-hairline);
+    background-color: var(--surface-solid);
+    padding: 1rem 2rem;
+}
+
+.navbar-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand-text-label {
+    font-weight: 700;
+    font-size: 1.25rem;
+}
+
+.logo-accent-node {
+    color: var(--indigo-primary);
+}
+
+.navbar-utility-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.pulse-indicator-node {
+    width: 8px;
+    height: 8px;
+    background-color: #10b981;
+    border-radius: 50%;
+}
+
+.status-framework-tag {
+    font-family: monospace;
+    color: var(--text-silver-gray);
+    font-size: 0.85rem;
+}
+
+/* Main Body Content Workspace Flow */
+.viewport-workspace-flow {
+    flex: 1;
+    padding: 3rem 1rem;
+}
+
+.workspace-bounded-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.app-marketing-heading {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.badge-status-pill {
+    display: inline-block;
+    background: var(--indigo-subtle-tint);
+    color: var(--indigo-primary);
+    padding: 0.35rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+/* ⚡ PURANE WAJAISY SLEEK INTERACTIVE TECH HEADING FONTS RESTORED */
+.app-marketing-heading h1 {
+    font-size: 2.75rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--text-slate-onyx);
+    margin: 0 0 1rem 0;
+}
+
+.chrome-indigo-gradient {
+    color: var(--indigo-primary);
+    font-weight: 800;
+}
+
+.app-marketing-heading p {
+    color: var(--text-silver-gray);
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+/* Interactive Canvas and Input Elements */
+.product-interactive-canvas {
+    background: var(--surface-solid);
+    border: 1px solid var(--border-hairline);
+    border-radius: var(--radius-canvas);
+    padding: 2rem;
+    box-shadow: var(--shadow-premium);
+}
+
+.canvas-workflow-section {
+    margin-bottom: 2rem;
+}
+
+.workflow-header-label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.workflow-step-badge {
+    background: #f1f5f9;
+    color: var(--indigo-primary);
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+}
+
+.workflow-header-label label {
+    font-weight: 600;
+}
+
+/* Mega Dropzone Layout with Smooth Transitions & Active Hover States */
+.mega-dropzone-interactive-container {
+    border: 2px dashed #cbd5e1;
+    border-radius: 8px;
+    padding: 2.5rem 1rem;
+    text-align: center;
+    background: #f8fafc;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mega-dropzone-interactive-container:hover {
+    border-color: var(--indigo-primary);
+    background-color: var(--indigo-subtle-tint);
+}
+
+.vector-icon-circle-shell svg {
+    width: 40px;
+    height: 40px;
+    color: var(--text-silver-gray);
+    margin-bottom: 1rem;
+}
+
+.browse-action-link {
+    color: var(--indigo-primary);
+    text-decoration: underline;
+}
+
+.file-specification-metadata {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text-silver-gray);
+    margin-top: 0.75rem;
+}
+
+/* Interactive Textarea Interface with Soft Focus Transitions */
+.textarea-input-wrapper-shell textarea {
+    width: 100%;
+    min-height: 150px;
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 1rem;
+    font-family: inherit;
+    box-sizing: border-box;
+    transition: all 0.2s ease-in-out;
+}
+
+.textarea-input-wrapper-shell textarea:focus {
+    outline: none;
+    border-color: var(--indigo-primary);
+    background-color: #ffffff;
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+}
+
+/* Action Footer Panel and Centered Buttons */
+.canvas-action-footer-panel {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+/* Premium Centered Button with Sliding Micro-Lifting Animation */
+.premium-action-trigger-btn {
+    background: var(--indigo-primary);
+    color: white;
+    border: none;
+    padding: 0.85rem 2rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.premium-action-trigger-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    background-color: #4338ca;
+    box-shadow: 0 6px 20px rgba(79, 70, 229, 0.2);
+}
+
+.premium-action-trigger-btn:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.chevron-arrow-icon {
+    width: 18px;
+    height: 18px;
+}
+
+/* ==========================================================================
+   DYNAMIC PROCESSING LOADER & RESULT PANELS SPECIFICATIONS (YOUR CODE ATTACHED)
+   ========================================================================== */
+
+/* Inline Spinner Setup */
+.interactive-loader-group {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+}
+
+.chic-spinner-ring {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    border-top-color: #ffffff;
+    animation: spinnerRotate 0.65s linear infinite;
+}
+
+@keyframes spinnerRotate {
+    to { transform: rotate(360deg); }
+}
+
+/* Results Section Canvas Sheet */
+.results-display-sheet {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    animation: slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUpFade {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Hero Score Metrics Display Card */
+.summary-score-hero-card {
+    background-color: var(--surface-solid);
+    border: 1px solid var(--border-hairline);
+    border-radius: var(--radius-canvas);
+    padding: 2rem 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    box-shadow: var(--shadow-premium);
+}
+
+.score-ring-view {
+    background-color: var(--indigo-subtle-tint);
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid rgba(59, 130, 246, 0.15);
+}
+
+.score-metric-number {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--indigo-primary);
+}
+
+.score-metric-denominator {
+    font-size: 0.85rem;
+    color: var(--text-silver-gray);
+    font-weight: 500;
+    margin-top: 0.4rem;
+}
+
+.hero-text-block h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-slate-onyx);
+    margin-bottom: 0.25rem;
+}
+
+.hero-text-block p {
+    font-size: 0.88rem;
+    color: var(--text-silver-gray);
+    line-height: 1.45;
+}
+
+/* Grid layout for detailed feedback fields */
+.metrics-detail-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+.metric-card-block {
+    background-color: var(--surface-solid);
+    border: 1px solid var(--border-hairline);
+    border-radius: var(--radius-canvas);
+    padding: 2.25rem 2.5rem;
+    box-shadow: var(--shadow-premium);
+}
+
+.metric-card-block h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--text-slate-onyx);
+    margin-bottom: 1.25rem;
+    opacity: 0.9;
+}
+
+/* Tags layout for missing keywords mapping */
+.tags-flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+}
+
+.keyword-danger-tag {
+    background-color: #fef2f2;
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.08);
+    padding: 0.4rem 0.85rem;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+/* Ordered suggestion list layouts */
+.suggestions-ordered-list {
+    padding-left: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.suggestions-ordered-list li {
+    font-size: 0.92rem;
+    color: var(--text-slate-onyx);
+    line-height: 1.6;
+}
+
+.suggestions-ordered-list li::marker {
+    color: var(--indigo-primary);
+    font-weight: 700;
+}
