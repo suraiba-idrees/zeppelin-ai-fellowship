@@ -64,7 +64,7 @@ export default function Home() {
           </span>
           <div className="navbar-utility-status">
             <span className="pulse-indicator-node"></span>
-            <span className="status-framework-tag">// Resume Feedback Engine v2.0</span>
+            <span className="status-framework-tag"> Resume Feedback Engine v2.0</span>
           </div>
         </div>
       </header>
