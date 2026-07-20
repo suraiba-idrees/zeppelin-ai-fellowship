@@ -1,6 +1,6 @@
 'use client';
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useState, ChangeEvent } from "react";
 
 // Standard Structural Blueprint interface mapping for our dynamic JSON object
 interface AnalysisResponse {
@@ -55,6 +55,11 @@ export default function Home() {
     if (fileInput) fileInput.value = "";
   }
 
+  function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0] || null;
+    setResumeFile(file);
+  }
+
   return (
     <div className="app-viewport-wrapper">
       <header className="app-global-navbar">
@@ -64,7 +69,7 @@ export default function Home() {
           </span>
           <div className="navbar-utility-status">
             <span className="pulse-indicator-node"></span>
-            <span className="status-framework-tag">// Resume Feedback Engine v2.0</span>
+            <span className="status-framework-tag">Resume Feedback Engine v2.0</span>
           </div>
         </div>
       </header>
@@ -72,17 +77,19 @@ export default function Home() {
       <div className="viewport-workspace-flow">
         <div className="workspace-bounded-container">
           <div className="app-marketing-heading">
-            <div className="badge-status-pill">Powered by Gemini & Claude</div>
+            <div className="badge-status-pill">Powered by Gemini</div>
             <h1>Optimize Your Resume For <span className="chrome-indigo-gradient">ATS Alignment</span></h1>
             <p>Scan your profile against target market framework metrics, extract missing keyword parameters, and build clear alignment scores instantly.</p>
           </div>
 
           <main className="product-interactive-canvas">
             <form id="screenerForm" onSubmit={handleSubmit}>
+              
+              {/* SECTION 1: RESUME UPLOAD */}
               <div className="canvas-workflow-section">
                 <div className="workflow-header-label">
                   <span className="workflow-step-badge">01</span>
-                  <label htmlFor="resumeFile">Ingest Candidate Profile</label>
+                  <label htmlFor="resumeFile" className="workflow-label-text">Ingest Candidate Profile</label>
                 </div>
 
                 <div className="mega-dropzone-interactive-container" style={{ position: 'relative' }}>
@@ -90,10 +97,7 @@ export default function Home() {
                     type="file"
                     id="resumeFile"
                     accept=".pdf,.doc,.docx"
-                    onChange={(event) => {
-                      const file = event.target.files?.[0] || null;
-                      setResumeFile(file);
-                    }}
+                    onChange={handleFileChange}
                     style={{
                       position: 'absolute',
                       top: 0,
@@ -122,6 +126,7 @@ export default function Home() {
                 </div>
               </div>
 
+              {/* SECTION 2: JOB DESCRIPTION */}
               <div className="canvas-workflow-section">
                 <div className="workflow-header-label">
                   <span className="workflow-step-badge">02</span>
@@ -138,26 +143,25 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* ⚡ UPDATED BOTH BUTTONS WITH GAP MAPPING FOR BALANCED LAYOUT */}
+              {/* FOOTER ACTIONS */}
               <div className="canvas-action-footer-panel" style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
                 <button 
                   type="button" 
                   onClick={handleReset} 
                   disabled={isLoading}
                   style={{
-                    background: '#e2e8f0',     /* Active gray background */
-                    color: '#0f172a',          /* Bold dark text color */
+                    background: '#e2e8f0',
+                    color: '#0f172a',
                     border: 'none',
                     padding: '0.85rem 1.75rem',
                     borderRadius: '9999px',
                     fontWeight: 600,
-                    cursor: 'pointer'          /* Standard clickable pointer */
-                      }}
-                    >
-                Clear Form
+                    cursor: isLoading ? 'not-allowed' : 'pointer'
+                  }}
+                >
+                  Clear Form
                 </button>
 
-                
                 <button type="submit" id="submitBtn" className="premium-action-trigger-btn" disabled={isLoading}>
                   {isLoading ? (
                     <div className="interactive-loader-group">
@@ -178,10 +182,9 @@ export default function Home() {
             </form>
           </main>
 
-          {/* DYNAMIC METRICS OUTPUT PANEL - RENDERS ON SUCCESS WITH REAL SAAS CARDS */}
+          {/* DYNAMIC METRICS OUTPUT PANEL */}
           {analysisResult && (
             <section id="resultPanel" className="results-display-sheet">
-              
               <div className="summary-score-hero-card">
                 <div className="score-ring-view">
                   <span className="score-metric-number">{analysisResult.match_score}</span>
@@ -194,12 +197,13 @@ export default function Home() {
               </div>
 
               <div className="metrics-detail-grid">
-                
                 <div className="metric-card-block keyword-card">
                   <h3>Missing Keywords Space</h3>
                   <div className="tags-flex-container">
                     {analysisResult.missing_keywords.map((tag, idx) => (
-                      <span key={idx} className="keyword-danger-tag">⚠️ {tag}</span>
+                      <span key={idx} className="keyword-danger-tag">
+                        <span role="img" aria-label="warning">⚠️</span> {tag}
+                      </span>
                     ))}
                   </div>
                 </div>
@@ -212,9 +216,7 @@ export default function Home() {
                     ))}
                   </ol>
                 </div>
-
               </div>
-
             </section>
           )}
 
