@@ -1,6 +1,6 @@
 'use client';
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useState, ChangeEvent } from "react";
 
 // Standard Structural Blueprint interface mapping for our dynamic JSON object
 interface AnalysisResponse {
@@ -15,7 +15,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [analysisResult, setAnalysisResult] = useState<AnalysisResponse | null>(null);
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     if (!resumeFile || !jobDescription.trim()) {
@@ -24,25 +24,43 @@ export default function Home() {
     }
 
     setIsLoading(true);
-    setAnalysisResult(null); // Reset previous results on new submission
+    setAnalysisResult(null); 
 
-    // Simulating Backend Response Delay with 100% accurate Mock JSON Match Format
-    setTimeout(() => {
-      const mockJSONResponse: AnalysisResponse = {
-        match_score: 84,
-        missing_keywords: ["Next.js App Router", "Tailwind CSS Layouts", "Asynchronous Fetch API"],
+    try {
+     const formData = new FormData();
+
+      formData.append("resume", resumeFile);
+      formData.append("job_description", jobDescription);
+
+      const response = await fetch("http://127.0.0.1:8000/api/analyze", {
+      method: "POST",
+      body: formData,
+      });
+      if (!response.ok) {
+        throw new Error(`Server returned error status: ${response.status}`);
+      }
+
+      // 3. Temporary dynamic mock mapping wrapper to align with frontend layout display cards
+      const rawData = await response.json();
+      console.log("Backend Connected Successfully! Raw Payload logs:", rawData);
+
+      setAnalysisResult({
+        match_score: 87,
+        missing_keywords: ["Next.js App Router Architecture Modules", "Tailwind Component Design Tokens"],
         suggestions: [
-          "Integrate explicit state handling parameters directly inside your configuration headers.",
-          "Expand operational descriptions for web architecture modules by utilizing active framework verbs.",
-          "Structure standard TypeScript schemas to block runtime type execution errors seamlessly."
+          "Integrate strict TypeScript runtime interface models into active dashboard layers.",
+          "Ensure server layout handlers cleanly cross-verify dynamic fetch requests parameters."
         ]
-      };
+      });
 
-      setAnalysisResult(mockJSONResponse);
+    } catch (error) {
+      console.error("Connection matrix error:", error);
+      alert("Unable to connect to the Backend AI engine. Please ensure the Python server is running and accessible.");
+    }
+      finally {
       setIsLoading(false);
-    }, 2000); // 2 Seconds premium micro loading trigger interval
+    }
   }
-
   // ⚡ NEW ACTION TRIGGER TO FRESH START THE WORKSPACE FLOW
   function handleReset() {
     setResumeFile(null);
@@ -55,6 +73,11 @@ export default function Home() {
     if (fileInput) fileInput.value = "";
   }
 
+  function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0] || null;
+    setResumeFile(file);
+  }
+
   return (
     <div className="app-viewport-wrapper">
       <header className="app-global-navbar">
@@ -64,7 +87,7 @@ export default function Home() {
           </span>
           <div className="navbar-utility-status">
             <span className="pulse-indicator-node"></span>
-            <span className="status-framework-tag"> Resume Feedback Engine v2.0</span>
+            <span className="status-framework-tag">Resume Feedback Engine v2.0</span>
           </div>
         </div>
       </header>
@@ -72,17 +95,19 @@ export default function Home() {
       <div className="viewport-workspace-flow">
         <div className="workspace-bounded-container">
           <div className="app-marketing-heading">
-            <div className="badge-status-pill">Powered by Gemini & Claude</div>
+            <div className="badge-status-pill">Powered by Gemini</div>
             <h1>Optimize Your Resume For <span className="chrome-indigo-gradient">ATS Alignment</span></h1>
             <p>Scan your profile against target market framework metrics, extract missing keyword parameters, and build clear alignment scores instantly.</p>
           </div>
 
           <main className="product-interactive-canvas">
             <form id="screenerForm" onSubmit={handleSubmit}>
+              
+              {/* SECTION 1: RESUME UPLOAD */}
               <div className="canvas-workflow-section">
                 <div className="workflow-header-label">
                   <span className="workflow-step-badge">01</span>
-                  <label htmlFor="resumeFile">Ingest Candidate Profile</label>
+                  <label htmlFor="resumeFile" className="workflow-label-text">Ingest Candidate Profile</label>
                 </div>
 
                 <div className="mega-dropzone-interactive-container" style={{ position: 'relative' }}>
@@ -90,10 +115,7 @@ export default function Home() {
                     type="file"
                     id="resumeFile"
                     accept=".pdf,.doc,.docx"
-                    onChange={(event) => {
-                      const file = event.target.files?.[0] || null;
-                      setResumeFile(file);
-                    }}
+                    onChange={handleFileChange}
                     style={{
                       position: 'absolute',
                       top: 0,
@@ -122,6 +144,7 @@ export default function Home() {
                 </div>
               </div>
 
+              {/* SECTION 2: JOB DESCRIPTION */}
               <div className="canvas-workflow-section">
                 <div className="workflow-header-label">
                   <span className="workflow-step-badge">02</span>
@@ -138,26 +161,25 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* ⚡ UPDATED BOTH BUTTONS WITH GAP MAPPING FOR BALANCED LAYOUT */}
+              {/* FOOTER ACTIONS */}
               <div className="canvas-action-footer-panel" style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
                 <button 
                   type="button" 
                   onClick={handleReset} 
                   disabled={isLoading}
                   style={{
-                    background: '#e2e8f0',     /* Active gray background */
-                    color: '#0f172a',          /* Bold dark text color */
+                    background: '#e2e8f0',
+                    color: '#0f172a',
                     border: 'none',
                     padding: '0.85rem 1.75rem',
                     borderRadius: '9999px',
                     fontWeight: 600,
-                    cursor: 'pointer'          /* Standard clickable pointer */
-                      }}
-                    >
-                Clear Form
+                    cursor: isLoading ? 'not-allowed' : 'pointer'
+                  }}
+                >
+                  Clear Form
                 </button>
 
-                
                 <button type="submit" id="submitBtn" className="premium-action-trigger-btn" disabled={isLoading}>
                   {isLoading ? (
                     <div className="interactive-loader-group">
@@ -178,10 +200,9 @@ export default function Home() {
             </form>
           </main>
 
-          {/* DYNAMIC METRICS OUTPUT PANEL - RENDERS ON SUCCESS WITH REAL SAAS CARDS */}
+          {/* DYNAMIC METRICS OUTPUT PANEL */}
           {analysisResult && (
             <section id="resultPanel" className="results-display-sheet">
-              
               <div className="summary-score-hero-card">
                 <div className="score-ring-view">
                   <span className="score-metric-number">{analysisResult.match_score}</span>
@@ -194,12 +215,13 @@ export default function Home() {
               </div>
 
               <div className="metrics-detail-grid">
-                
                 <div className="metric-card-block keyword-card">
                   <h3>Missing Keywords Space</h3>
                   <div className="tags-flex-container">
                     {analysisResult.missing_keywords.map((tag, idx) => (
-                      <span key={idx} className="keyword-danger-tag">⚠️ {tag}</span>
+                      <span key={idx} className="keyword-danger-tag">
+                        <span role="img" aria-label="warning">⚠️</span> {tag}
+                      </span>
                     ))}
                   </div>
                 </div>
@@ -212,9 +234,7 @@ export default function Home() {
                     ))}
                   </ol>
                 </div>
-
               </div>
-
             </section>
           )}
 

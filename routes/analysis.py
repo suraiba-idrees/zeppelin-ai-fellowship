@@ -1,13 +1,38 @@
+from fastapi import APIRouter, UploadFile, File, Form
+import shutil
+import os
 
-from fastapi import APIRouter
-from models.analysis import AnalysisRequest
+from pdf_utils import extract_text_from_pdf, extract_text_from_docx
 
 router = APIRouter()
 
+
 @router.post("/analyze")
-def analyze_resume(data: AnalysisRequest):
+async def analyze_resume(
+    resume: UploadFile = File(...),
+    job_description: str = Form(...)
+):
+
+    os.makedirs("uploads", exist_ok=True)
+
+    file_path = os.path.join("uploads", resume.filename)
+
+    with open(file_path, "wb") as buffer:
+        shutil.copyfileobj(resume.file, buffer)
+
+    if resume.filename.endswith(".pdf"):
+        resume_text = extract_text_from_pdf(file_path)
+
+    elif resume.filename.endswith(".docx"):
+        resume_text = extract_text_from_docx(file_path)
+
+    else:
+        return {
+            "error": "Only PDF and DOCX files are supported."
+        }
+
     return {
-        "message": "Analysis endpoint is ready.",
-        "resume_text": data.resume_text,
-        "job_description": data.job_description
+        "message": "Resume text extracted successfully.",
+        "resume_text": resume_text,
+        "job_description": job_description
     }
