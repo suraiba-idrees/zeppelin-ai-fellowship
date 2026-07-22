@@ -42,24 +42,28 @@ export default function Home() {
 
       // 3. Temporary dynamic mock mapping wrapper to align with frontend layout display cards
       const rawData = await response.json();
-      console.log("Backend Connected Successfully! Raw Payload logs:", rawData);
 
-      setAnalysisResult({
-        match_score: 87,
-        missing_keywords: ["Next.js App Router Architecture Modules", "Tailwind Component Design Tokens"],
-        suggestions: [
-          "Integrate strict TypeScript runtime interface models into active dashboard layers.",
-          "Ensure server layout handlers cleanly cross-verify dynamic fetch requests parameters."
-        ]
-      });
+      console.log(
+        "Backend Connected Successfully! Raw Payload logs:",
+        rawData
+      );
+
+    setAnalysisResult(rawData);
 
     } catch (error) {
-      console.error("Connection matrix error:", error);
-      alert("Unable to connect to the Backend AI engine. Please ensure the Python server is running and accessible.");
-    }
-      finally {
-      setIsLoading(false);
-    }
+
+    const message =
+      error instanceof Error
+      ? error.message
+      : "Unknown error";
+
+    alert(message);
+
+} finally {
+
+  setIsLoading(false);
+
+}
   }
   // ⚡ NEW ACTION TRIGGER TO FRESH START THE WORKSPACE FLOW
   function handleReset() {

@@ -1,7 +1,9 @@
-from fastapi import APIRouter, UploadFile, File, Form
+from fastapi import APIRouter, UploadFile, File, Form, HTTPException
 import shutil
 import os
+import json
 
+from ai_handler import screen_resume
 from pdf_utils import extract_text_from_pdf, extract_text_from_docx
 
 router = APIRouter()
@@ -20,6 +22,7 @@ async def analyze_resume(
     with open(file_path, "wb") as buffer:
         shutil.copyfileobj(resume.file, buffer)
 
+    # Extract resume text
     if resume.filename.endswith(".pdf"):
         resume_text = extract_text_from_pdf(file_path)
 
@@ -31,8 +34,27 @@ async def analyze_resume(
             "error": "Only PDF and DOCX files are supported."
         }
 
-    return {
-        "message": "Resume text extracted successfully.",
-        "resume_text": resume_text,
-        "job_description": job_description
-    }
+    try:
+
+        response = screen_resume(
+            resume_text,
+            job_description
+        )
+
+        try:
+
+            return json.loads(response)
+
+        except json.JSONDecodeError:
+
+            raise HTTPException(
+                status_code=500,
+                detail="Gemini returned invalid JSON."
+            )
+
+    except Exception as e:
+
+        raise HTTPException(
+            status_code=503,
+            detail=str(e)
+        )
