@@ -1,130 +1,154 @@
 # Zeppelin AI Resume Screener
+![Python](https://img.shields.io/badge/Python-3.x-blue)
+![FastAPI](https://img.shields.io/badge/FastAPI-Backend-009688)
+![Next.js](https://img.shields.io/badge/Next.js-Frontend-black)
+![Gemini](https://img.shields.io/badge/Google-Gemini_AI-orange)
 
-![Status](https://img.shields.io/badge/Status-Active-success)
-![License](https://img.shields.io/badge/License-MIT-green)
-![Fellowship](https://img.shields.io/badge/Zeppelin-AI%20Fellowship-purple)
+![Zeppelin AI Resume Screener Interface](screenshots/landing-page.png)
 
-**AI-powered Resume Parser & Feedback Engine**
+> An AI-powered resume analysis and feedback engine that compares resumes against job descriptions using Google Gemini to generate ATS-oriented insights, identify missing keywords, and provide actionable improvement suggestions.
 
-*Developed as part of the Zeppelin AI & Generative AI Fellowship.*
-
-> **Week 1 — Repository Setup • Git Workflow • Team Collaboration**
+Developed as part of the **Zeppelin AI & Generative AI Fellowship**.
 
 ---
 
 ## Overview
 
-The **Zeppelin AI Resume Screener** is an AI-powered application designed to streamline the recruitment process by parsing resumes, comparing candidate profiles with job descriptions, and generating intelligent feedback using Large Language Models (LLMs).
+The Zeppelin AI Resume Screener streamlines the initial resume evaluation process by combining document parsing with Generative AI. Users can upload a resume in PDF or DOCX format, provide a target job description, and receive an AI-generated analysis that includes a compatibility score, missing keywords, and strategic recommendations for improving alignment with the target role.
 
-This repository currently represents the **Week 1** project setup, focusing on repository initialization, team collaboration, Git workflow, and project planning. Core application features will be implemented throughout the upcoming weeks of the fellowship.
-
-### Project Goal
-
-Build an intelligent resume screening platform capable of:
-
-- Parsing resume documents
-- Extracting candidate information
-- Matching resumes against job descriptions
-- Generating AI-powered resume feedback
+The application consists of a **Next.js frontend** for user interaction and a **FastAPI backend** responsible for resume extraction, prompt generation, and communication with the Google Gemini API.
 
 ---
 
-## Repository Workflow
+## Features
 
-This repository follows the Git workflow defined by the Zeppelin AI & Generative AI Fellowship.
-
-| Branch | Purpose |
-| :------ | :------ |
-| `main` | Stable production branch (protected) |
-| `dev` | Integration branch |
-| `feature/frontend-foundation` | Frontend foundation and UI layout branch |
-| `feature/ai-engine` | AI engine and LLM integration branch |
-| `feature/pdf-utility` | PDF utility and document processing branch |
-| `feature/backend-setup` | Backend setup and core API framework branch |
-
-### Current Feature Branches
-
-| Member | Branch |
-| :------ | :----- |
-| **Suraiba Idrees** *(Team Lead)* | `feature/frontend-foundation` |
-| Maryam Imran Shah | `feature/ai-engine` |
-| Aniqa Qamar | `feature/pdf-utility` |
-| Saboora Khalil | `feature/backend-setup` |
+- AI-powered resume analysis using Google Gemini
+- Resume upload support for PDF and DOCX documents
+- Automatic resume text extraction
+- Job description comparison
+- AI-generated resume compatibility score
+- Missing keyword identification
+- Resume improvement suggestions
+- JSON-based AI response handling
+- Temporary upload cleanup after analysis
+- Input validation and error handling
 
 ---
 
-## Tech Stack
+## Technology Stack
 
-This project follows the official technology roadmap of the **Zeppelin AI & Generative AI Fellowship**.
-
-### Week 1 Setup
-
-- Git
-- GitHub
-- Python Virtual Environment (`.venv`)
-
-### Planned Core Stack
-
-#### Frontend
+### Frontend
 
 - Next.js
+- React
+- TypeScript
 
-#### Backend
+### Backend
 
-- Python FastAPI
+- Python
+- FastAPI
 
-#### Vector Database
+### AI
 
-- Qdrant *(Required)*
-- Pinecone *(Alternative)*
+- Google Gemini API
+- Google GenAI SDK
 
-#### Large Language Models (LLMs)
+### Document Processing
 
-- OpenAI
-- Anthropic Claude
-- Google Gemini
+- PyPDF2
+- python-docx
 
-#### AI Development Tools
+### Environment & Utilities
 
-- GitHub Copilot
-- Cursor
-- Claude Code
-- Windsurf
-- v0 / Bolt
-
-> **Note:** Week 1 focuses on repository setup, Git workflow, collaboration, and project planning. The technologies listed above will be integrated progressively throughout the fellowship according to the official roadmap.
+- python-dotenv
 
 ---
 
-## Getting Started
+## Project Structure
 
-Clone the repository.
-
-```bash
-git clone <repository-url>
+```text
+zeppelin-ai-resume-screener
+│
+├── frontend/
+│   └── app/
+│       ├── globals.css
+│       ├── layout.tsx
+│       └── page.tsx
+│
+├── models/
+│   └── analysis.py
+│
+├── routes/
+│   └── analysis.py
+│
+├── uploads/          # Temporary uploaded resume files
+│
+├── ai_handler.py
+├── pdf_utils.py
+├── prompt_template.py
+├── server.py
+├── package.json
+└── requirements.txt
 ```
 
-Navigate to the project directory.
+---
+
+## System Workflow
+
+```text
+User Uploads Resume
+          │
+          ▼
+Resume Text Extraction
+(PDF / DOCX)
+          │
+          ▼
+Job Description Input
+          │
+          ▼
+Prompt Construction
+          │
+          ▼
+Google Gemini API
+          │
+          ▼
+Structured JSON Response
+          │
+          ▼
+Frontend Visualization
+```
+
+---
+
+## Installation
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/suraiba-idrees/zeppelin-ai-resume-screener.git
+```
+
+### 2. Navigate to the project directory
 
 ```bash
 cd zeppelin-ai-resume-screener
 ```
 
-Create a virtual environment.
+### 3. Create a virtual environment
 
 ```bash
 python -m venv .venv
 ```
 
-Activate the virtual environment.
+### 4. Activate the environment
 
-### Windows
+**Windows**
 
 ```bash
 .venv\Scripts\activate
 ```
 
-### Linux / macOS
+**Linux / macOS**
 
 ```bash
 source .venv/bin/activate
@@ -132,45 +156,168 @@ source .venv/bin/activate
 
 ---
 
-## Development Guidelines
+### 5. Install backend dependencies
 
-- Create a new `feature/feature-name` branch before starting development.
-- Commit changes frequently using meaningful commit messages.
-- Submit completed work through Pull Requests targeting the `dev` branch.
-- Do not push directly to the `main` branch.
-- Pull the latest changes from `dev` before beginning new work.
-
-### Example Commit Messages
-
-```text
-feat: implement resume upload
-feat: add AI engine skeleton
-feat: add frontend foundation
-fix: resolve PDF parsing issue
-docs: update README
+```bash
+pip install -r requirements.txt
 ```
 
 ---
 
-## Current Development
+### 6. Install frontend dependencies
 
-Development tasks are managed through GitHub Issues.
+```bash
+cd frontend
+npm install
+```
 
-### Active Tasks
+---
 
-- Backend project setup
-- AI engine initialization
-- PDF utility foundation
-- Frontend foundation
+## Environment Variables
 
-Additional issues and milestones will be introduced as the project progresses.
+Create a `.env` file in the project root.
+
+Example:
+
+```env
+GEMINI_API_KEY=your_api_key_here
+```
+
+> Never commit your actual API key to GitHub.
+
+A `.env.example` file is included in the repository:
+
+```env
+GEMINI_API_KEY=your_gemini_api_key_here
+PORT=8000
+ENVIRONMENT=development
+```
+
+
+---
+
+## Running the Application
+
+### Start the backend
+
+```bash
+py server.py
+```
+
+### Start the frontend
+
+```bash
+cd frontend
+npm run dev
+```
+
+The frontend will communicate with the FastAPI backend to process uploaded resumes and generate AI-based feedback.
+
+---
+
+## API Endpoint
+
+The backend exposes a REST API for resume analysis.
+
+### Analyze Resume
+
+**Endpoint**
+
+```http
+POST /api/analyze
+```
+
+**Content-Type**
+
+```text
+multipart/form-data
+```
+
+### Request Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `resume` | File | ✅ | Resume in PDF or DOCX format |
+| `job_description` | String | ✅ | Target job description |
+
+### Example Response
+
+```json
+{
+  "match_score": 82,
+  "missing_keywords": [
+    "REST APIs",
+    "Node.js",
+    "Backend Development"
+  ],
+  "suggestions": [
+    "Highlight backend development experience.",
+    "Include relevant technical keywords.",
+    "Expand project descriptions with measurable impact."
+  ]
+}
+```
+
+---
+
+## Usage
+
+1. Launch both the backend and frontend servers.
+2. Open the application in your browser.
+3. Upload a resume in **PDF** or **DOCX** format.
+4. Enter the target job description.
+5. Click **Scan & Generate AI Matrix Analysis**.
+6. Review the generated analysis, including:
+   - Framework Alignment Score
+   - Missing Keywords
+   - AI-generated Resume Improvement Suggestions
+
+---
+
+## Error Handling
+
+The application includes validation and exception handling for common scenarios, including:
+
+- Missing job description
+- Unsupported file formats
+- Empty or unreadable resume files
+- Invalid AI response format
+- Temporary Gemini API service unavailability
+- Automatic cleanup of uploaded temporary files
+
+---
+
+## Screenshots
+
+### 1. Resume Uploaded
+
+![Resume Upload](screenshots/resume-uploaded.png)
+
+### 2. Analysis Results
+
+![Analysis Results](screenshots/analysis-results.png)
+
+---
+
+## Future Improvements
+
+Potential future enhancements include:
+
+- Support for additional resume formats
+- Multiple job description comparison
+- Downloadable PDF feedback reports
+- Resume history and previous analyses
+- Authentication and user profiles
+- Enhanced ATS scoring methodology
+- Batch resume processing
+- Cloud deployment
 
 ---
 
 ## Project Team
 
 | Role | Member |
-| :--- | :----- |
+|------|--------|
 | **Team Lead** | Suraiba Idrees |
 | **Member** | Maryam Imran Shah |
 | **Member** | Aniqa Qamar |
@@ -178,16 +325,35 @@ Additional issues and milestones will be introduced as the project progresses.
 
 ---
 
-## Project Status
+## Acknowledgements
 
-**Current Milestone**
+This project was developed as part of the **Zeppelin AI & Generative AI Fellowship**, with the objective of applying modern AI technologies to solve practical recruitment and resume screening challenges.
 
-✅ **Week 1 — Repository Setup & Git Workflow**
-
-Future milestones will include backend development, AI integration, document parsing, vector databases, deployment, and application refinement according to the fellowship roadmap.
+Special thanks to the Zeppelin Labs team for providing the learning platform and project framework.
 
 ---
 
 ## License
 
 This project is licensed under the **MIT License**.
+
+---
+
+## Contributing
+
+Contributions, suggestions, and improvements are welcome.
+
+If you would like to contribute:
+
+1. Fork the repository.
+2. Create a new feature branch.
+3. Commit your changes using meaningful commit messages.
+4. Open a Pull Request for review.
+
+---
+
+## Contact
+
+For questions or suggestions regarding this project, please open an Issue in this repository.
+
+---
