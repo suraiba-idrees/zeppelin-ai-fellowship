@@ -36,10 +36,11 @@ export default function Home() {
       method: "POST",
       body: formData,
       });
-      if (!response.ok) {
-        throw new Error(`Server returned error status: ${response.status}`);
-      }
-
+      
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.detail || "Something went wrong.");
+}
       // 3. Temporary dynamic mock mapping wrapper to align with frontend layout display cards
       const rawData = await response.json();
 
