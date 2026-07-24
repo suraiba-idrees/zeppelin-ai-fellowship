@@ -196,6 +196,29 @@ ENVIRONMENT=development
 
 ---
 
+## Deployment
+
+The application has been deployed successfully using cloud platforms:
+
+| Component | Platform | Status |
+|-----------|----------|--------|
+| Frontend | Vercel | ✅ Deployed |
+| Backend | FastAPI Cloud | ✅ Deployed |
+
+### Live Application
+
+**Frontend**
+
+https://zeppelin-ai-resume-screener.vercel.app
+
+**Backend API**
+
+https://zeppelin-ai-resume-screener.fastapicloud.dev
+
+The deployed frontend communicates with the FastAPI backend through REST API endpoints to perform AI-powered resume analysis using Google Gemini.
+
+--- 
+
 ## Running the Application
 
 ### Start the backend
@@ -211,7 +234,7 @@ cd frontend
 npm run dev
 ```
 
-The frontend will communicate with the FastAPI backend to process uploaded resumes and generate AI-based feedback.
+> **Note:** A live deployed version of the application is available in the **Deployment** section above.
 
 ---
 
@@ -262,7 +285,7 @@ multipart/form-data
 
 ## Usage
 
-1. Launch both the backend and frontend servers.
+1. ccess the live application or launch the frontend and backend servers locally.
 2. Open the application in your browser.
 3. Upload a resume in **PDF** or **DOCX** format.
 4. Enter the target job description.
@@ -310,7 +333,7 @@ Potential future enhancements include:
 - Authentication and user profiles
 - Enhanced ATS scoring methodology
 - Batch resume processing
-- Cloud deployment
+- Cloud monitoring and performance optimization
 
 ---
 
