@@ -1,6 +1,0 @@
-v: 0
-micros:
-  - name: zeppelin-ai-resume-screener
-    src: .
-    engine: python3.11
-    run: uvicorn server:app --host 0.0.0.0 --port $PORT
