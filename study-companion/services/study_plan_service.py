@@ -14,6 +14,7 @@ if not GEMINI_API_KEY:
 
 client = genai.Client(api_key=GEMINI_API_KEY)
 
+
 def build_study_plan_prompt(
     goal: str,
     current_skills: str,
@@ -42,10 +43,8 @@ Available Time:
 Study Duration:
 {duration}
 
-
 Retrieved Syllabus Content:
 {context}
-
 
 Generate:
 
@@ -60,6 +59,7 @@ Make the plan realistic, structured, and easy to follow.
 """
 
     return prompt
+
 
 def generate_study_plan(
     goal: str,
@@ -76,36 +76,47 @@ def generate_study_plan(
         current_skills: Existing skills/background
         available_time: Hours available per day/week
         duration: Desired learning duration
+        retrieved_chunks: Retrieved syllabus text chunks from retrieval service
 
     Returns:
-        Generated study plan text
+        Dictionary containing the generated study plan or an error message.
     """
 
-prompt = build_study_plan_prompt(
-    goal,
-    current_skills,
-    available_time,
-    duration,
-    retrieved_chunks
-)
+    prompt = build_study_plan_prompt(
+        goal,
+        current_skills,
+        available_time,
+        duration,
+        retrieved_chunks
+    )
 
-
-try:
+    try:
         response = client.models.generate_content(
-    model="gemini-2.0-flash-lite",
-    contents=prompt
-)
+            model="gemini-3.5-flash",
+            contents=prompt
+        )
 
         return {
-    "status": "success",
-    "study_plan": response.text
-}
+            "status": "success",
+            "study_plan": response.text
+        }
 
-except Exception as e:
+    except Exception as e:
         return {
-    "status": "error",
-    "message": str(e)
-}
+            "status": "error",
+            "message": str(e)
+        }
+#Test Section
+if __name__ == "__main__":
+    result = generate_study_plan(
+        goal="Learn Operating Systems",
+        current_skills="Basic Python",
+        available_time="2 hours per day",
+        duration="4 weeks",
+        retrieved_chunks=[
+            "Chapter 1 covers Operating Systems fundamentals.",
+            "Scheduling algorithms include FCFS and SJF."
+        ]
+    )
 
-
-# Test function (temporary)
+    print(result)
