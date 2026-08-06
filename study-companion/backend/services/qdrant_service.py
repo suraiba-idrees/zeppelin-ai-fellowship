@@ -22,8 +22,7 @@ COLLECTION_NAME = "study_notes"
 # Dynamically match the embedding model's real output dimension
 # (all-MiniLM-L6-v2 -> 384). This removes the hardcoded-mismatch bug
 # and stays correct even if the embedding model is changed later.
-VECTOR_SIZE = embedding_model.get_sentence_embedding_dimension()
-
+VECTOR_SIZE = embedding_model.get_embedding_dimension()
 
 def create_collection(vector_size: int = VECTOR_SIZE) -> None:
     """

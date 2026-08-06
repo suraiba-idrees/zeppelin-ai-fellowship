@@ -16,8 +16,7 @@ async def upload_document(file: UploadFile = File(...)):
     embeddings, and store them in the Qdrant collection.
     """
 
-    if not (
-        file.filename.endswith(".pdf")
+    if not (        file.filename.endswith(".pdf")
         or file.filename.endswith(".txt")
     ):
         raise HTTPException(
