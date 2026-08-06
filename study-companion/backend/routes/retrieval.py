@@ -29,7 +29,9 @@ def retrieve(request: RetrievalRequest):
         )
 
     try:
-        query_vector = embedding_model.encode(request.query).tolist()
+        query_vector = embedding_model.encode(
+            [request.query]
+        )[0].tolist()
 
         results = search_vectors(
             query_vector=query_vector,
@@ -42,6 +44,7 @@ def retrieve(request: RetrievalRequest):
         }
 
     except Exception as e:
+        print(f"Retrieval error: {e}")
         raise HTTPException(
             status_code=500,
             detail=f"Retrieval failed: {str(e)}"
