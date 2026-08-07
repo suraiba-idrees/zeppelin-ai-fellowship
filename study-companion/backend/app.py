@@ -11,9 +11,8 @@ app = FastAPI(
 app.include_router(document_router)
 app.include_router(retrieval_router)
 
-# Once Aniqa's study-plan route is ready, add:
-# from routes.studyplan_routes import router as studyplan_router
-# app.include_router(studyplan_router)
+from routes.studyplan_routes import router as studyplan_router
+app.include_router(studyplan_router)
 
 
 @app.on_event("startup")
