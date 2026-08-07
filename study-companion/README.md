@@ -146,6 +146,7 @@ Full interactive docs available at `http://127.0.0.1:8000/docs` once the server 
 
 ## Upcoming (Week 4)
 
+- Frontend UI (Next.js) connecting to the backend endpoints
 - Adaptive quiz generation
 - Progress tracking
 - Learning history
